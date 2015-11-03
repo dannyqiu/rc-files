@@ -14,17 +14,19 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# Source aliases from another file
-if [[ -e $HOME/.zsh-aliases.zsh ]]; then
-    source $HOME/.zsh-aliases.zsh
-fi
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JUNIT_HOME=/usr/local/share/junit
+export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:.
 
 # Customize to your needs...
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/Danny/Library/sox-14.4.0:/Users/Danny/Library/bin
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-export JAVA_HOME=/Library/Java/Home
-export JUNIT_HOME=/usr/local/share/junit
-export CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:.
+# Source aliases from another file
+if [[ -e $HOME/.zsh-aliases.zsh ]]; then
+    source $HOME/.zsh-aliases.zsh
+fi
+

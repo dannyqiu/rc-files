@@ -40,6 +40,8 @@ function swap() {
     mv $TMP_FILE $2
 }
 
+alias javal='java -cp $JAVA_LIBRARY_CLASSPATH'
+
 function jrun() {
     if [ ! -f $1 ]; then
         echo "File '$1' doesn't exist!"
@@ -53,9 +55,9 @@ function jrun() {
             cd ..
         done
         JAVA_FILE_PATH_FROM_PACKAGE=${JAVA_PACKAGE/\./\/}
-        javac $JAVA_FILE_PATH_FROM_PACKAGE/$JAVA_FILE || return
+        javac $JAVA_FILE_PATH_FROM_PACKAGE/$JAVA_FILE || (cd $CURRENT_DIR)
         echo "\033[92mRunning $JAVA_PACKAGE.$JAVA_CLASS ...\033[0m"
-        java $JAVA_PACKAGE.$JAVA_CLASS ${@:2}
+        javal $JAVA_PACKAGE.$JAVA_CLASS ${@:2}
         cd $CURRENT_DIR
         rm -f *.class
     fi
