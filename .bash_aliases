@@ -1,5 +1,5 @@
 # enable color support
-alias ls='ls -G'
+alias ls='ls --color'
 
 # Alias definitions.
 alias ..='cd ..'
