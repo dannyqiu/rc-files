@@ -9,6 +9,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'groenewege/vim-less'
 Plugin 'tpope/vim-liquid'
 Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/DrawIt'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
