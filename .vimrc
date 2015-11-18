@@ -26,6 +26,7 @@ set si
 set autoindent
 set smartindent
 set number
+set mouse=a " Mouse does not select line numbers
 syntax on
 set synmaxcol=356
 
