@@ -34,9 +34,9 @@ set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
 set cursorline
-highlight Cursorline cterm=none ctermbg=250
-autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=black
-autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=250
+highlight Cursorline cterm=none ctermbg=252
+autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
+autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=252
 
 " Only highlight to a certain length
 let g:LineLength_LineLength = 534 " Width of screen (178) x 3
