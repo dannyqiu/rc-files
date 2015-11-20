@@ -57,5 +57,9 @@ command -nargs=+ MapToggle call MapToggle(<f-args>)
 " Prevent Ex Mode
 map Q <Nop>
 MapToggle <C-e> spell
+
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
+
+" Remove trailing whitespace from certain file types
+autocmd FileType c,java,python,css,js autocmd BufWritePre <buffer> :%s/\s\+$//e
