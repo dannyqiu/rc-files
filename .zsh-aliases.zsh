@@ -18,6 +18,7 @@ alias doe='http_proxy=filtr.nycboe.org:8002'
 
 alias app='xattr -d com.apple.quarantine'
 
+alias vi='vim'
 alias vima='vim'
 
 alias 411='man'
@@ -45,19 +46,30 @@ alias javal='java -cp $JAVA_LIBRARY_CLASSPATH'
 function jrun() {
     if [ ! -f $1 ]; then
         echo "File '$1' doesn't exist!"
+    elif [ "$#" = "0" ]; then
+        echo "Usage: \tjrun <java file>"
     else
         CURRENT_DIR=`pwd`
         JAVA_FILE=$1
         JAVA_CLASS=${1%%.*}
         JAVA_PACKAGE=$(cat $JAVA_FILE | grep package | cut -f 2 -d ' ' | cut -f 1 -d \;)
-        for i in $(grep -o "." <<< "$package" | wc -l)
-        do
-            cd ..
-        done
+        PACKAGE_SPECIFIED=${#JAVA_PACKAGE}
+        if [ "$PACKAGE_SPECIFIED" != "0" ]; then
+            for i in $(grep -o "." <<< "$JAVA_PACKAGE" | wc -l)
+            do
+                cd ..
+            done
+        fi
         JAVA_FILE_PATH_FROM_PACKAGE=${JAVA_PACKAGE/\./\/}
-        javac $JAVA_FILE_PATH_FROM_PACKAGE/$JAVA_FILE || (cd $CURRENT_DIR)
-        echo "\033[92mRunning $JAVA_PACKAGE.$JAVA_CLASS ...\033[0m"
-        javal $JAVA_PACKAGE.$JAVA_CLASS ${@:2}
+        if [ "$JAVA_FILE_PATH_FROM_PACKAGE" != "" ]; then
+            JAVA_FILE_PATH_FROM_PACKAGE="$JAVA_FILE_PATH_FROM_PACKAGE/"
+        fi
+        javac -cp $JAVA_LIBRARY_CLASSPATH $JAVA_FILE_PATH_FROM_PACKAGE$JAVA_FILE || (cd $CURRENT_DIR && return)
+        if [ "$JAVA_PACKAGE" != "" ]; then
+            JAVA_PACKAGE="$JAVA_PACKAGE."
+        fi
+        echo "\033[92mRunning $JAVA_PACKAGE$JAVA_CLASS ...\033[0m"
+        java -cp $JAVA_LIBRARY_CLASSPATH $JAVA_PACKAGE$JAVA_CLASS ${@:2}
         cd $CURRENT_DIR
         rm -f *.class
     fi
