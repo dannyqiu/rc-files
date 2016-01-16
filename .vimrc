@@ -17,9 +17,10 @@ filetype plugin indent on
 
 " Use tabs instead of spaces for Makefile
 if @% != 'Makefile'
-   set softtabstop=4
-   set shiftwidth=4
-   set expandtab
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
 endif
 
 set si
@@ -28,7 +29,7 @@ set smartindent
 set number
 set mouse=a " Mouse does not select line numbers
 syntax on
-set synmaxcol=356
+set synmaxcol=534
 
 set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
@@ -57,9 +58,5 @@ command -nargs=+ MapToggle call MapToggle(<f-args>)
 " Prevent Ex Mode
 map Q <Nop>
 MapToggle <C-e> spell
-
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
-
-" Remove trailing whitespace from certain file types
-autocmd FileType c,java,python,css,js autocmd BufWritePre <buffer> :%s/\s\+$//e
