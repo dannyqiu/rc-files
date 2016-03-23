@@ -34,10 +34,12 @@ set synmaxcol=534
 set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
+:highlight Comment ctermfg=darkgrey
+
 set cursorline
-highlight Cursorline cterm=none ctermbg=252
+highlight Cursorline cterm=none ctermbg=236
 autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
-autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=252
+autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
 
 " Only highlight to a certain length
 let g:LineLength_LineLength = 534 " Width of screen (178) x 3
@@ -48,9 +50,9 @@ set backspace=indent,eol,start
 
 " Map key to toggle opt
 function MapToggle(key, opt)
-   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-   exec 'nnoremap '.a:key.' '.cmd
-   exec 'inoremap '.a:key." \<C-O>".cmd
+    let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+    exec 'nnoremap '.a:key.' '.cmd
+    exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
