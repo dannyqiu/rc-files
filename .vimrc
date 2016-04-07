@@ -29,21 +29,21 @@ set smartindent
 set number
 set mouse=a " Mouse does not select line numbers
 syntax on
-set synmaxcol=534
+set synmaxcol=356
 
 set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
-:highlight Comment ctermfg=darkgrey
-
+highlight Comment ctermfg=darkgrey
 set cursorline
 highlight Cursorline cterm=none ctermbg=236
 autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
 autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
+" highlight Cursorline cterm=none ctermbg=white
+" autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=white
 
-" Only highlight to a certain length
-let g:LineLength_LineLength = 534 " Width of screen (178) x 3
-"let g:LineLength_ctermbg = 0
+" Start scrolling three lines before the horizontal window border
+set scrolloff=3
 
 " Fix problem with backspace key
 set backspace=indent,eol,start
