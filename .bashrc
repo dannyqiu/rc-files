@@ -39,6 +39,7 @@ function prompt_command {
     BLUE="\[\033[0;38;5;27m\]"
     PURPLE="\[\033[0;38;5;21m\]"
     CYAN="\[\033[0;38;5;39m\]"
+    YELLOW="\[\033[0;38;5;226m\]"
     OFF="\[\033[0m\]"
 
     changes=`git status -s 2> /dev/null | wc -l | sed -e 's/ *//'`
@@ -59,10 +60,11 @@ function prompt_command {
     prompt="${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
 
     if [ ${exitstatus} -eq 0 ]; then
-        PS1="${prompt} ${GREEN}ᐅ ${OFF}"
+        PS1="${prompt} ${GREEN}ᐅ ${OFF}${YELLOW}${BOLD}"
     else
-        PS1="${prompt} ${RED}ᐅ ${OFF}"
+        PS1="${prompt} ${RED}ᐅ ${OFF}${YELLOW}${BOLD}"
     fi
+    trap 'echo -ne "\e[0m"' DEBUG
 
     PS2="${BOLD}>${OFF} "
 }
