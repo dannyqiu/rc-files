@@ -15,7 +15,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 #export LC_CTYPE=C
-export LANG=C
+#export LANG=C
 
 export EDITOR="/usr/local/bin/vim"
 
