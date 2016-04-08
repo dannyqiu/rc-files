@@ -64,7 +64,7 @@ function prompt_command {
     else
         PS1="${prompt} ${RED}ᐅ ${OFF}${YELLOW}${BOLD}"
     fi
-    trap 'echo -ne "\e[0m"' DEBUG
+    trap 'echo -ne "\033[0m"' DEBUG
 
     PS2="${BOLD}>${OFF} "
 }
@@ -90,7 +90,4 @@ if ! shopt -oq posix; then
 fi
 
 #export LC_CTYPE=C
-export LANG=C
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#export LANG=C
