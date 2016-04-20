@@ -1,5 +1,5 @@
 set nocompatible
-filetype off 
+filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -12,7 +12,10 @@ Plugin 'othree/html5.vim'
 Plugin 'groenewege/vim-less'
 Plugin 'tpope/vim-liquid'
 Plugin 'tpope/vim-surround'
+Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'vim-scripts/DrawIt'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
@@ -38,18 +41,20 @@ set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
 highlight Comment ctermfg=darkgrey
-set cursorline
-highlight Cursorline cterm=none ctermbg=236
-autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
-autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
-" highlight Cursorline cterm=none ctermbg=white
-" autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=white
+" set cursorline
+" highlight Cursorline cterm=none ctermbg=236
+" autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
+" autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
+highlight Cursorline cterm=none ctermbg=none
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
 " Fix problem with backspace key
 set backspace=indent,eol,start
+
+" Show status line on all windows, not just on splits
+set laststatus=2
 
 " Map key to toggle opt
 function MapToggle(key, opt)
@@ -60,12 +65,17 @@ endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Key Mappings
+" ==================
 " Prevent Ex Mode
 map Q <Nop>
+" Make it easier on the fingers
 imap <C-c> <Esc>
 MapToggle <C-e> spell
+
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
 
 let python_highlight_all = 1
 let javascript_enable_domhtmlcss = 1
+
+" For vim-airline
