@@ -40,12 +40,14 @@ set synmaxcol=356
 set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
-highlight Comment ctermfg=darkgrey
-" set cursorline
+highlight Comment ctermfg=DarkGrey
+set cursorline
 " highlight Cursorline cterm=none ctermbg=236
 " autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
 " autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
-highlight Cursorline cterm=none ctermbg=none
+highlight CursorLine cterm=none ctermfg=none ctermbg=none
+highlight LineNr cterm=none ctermfg=Brown ctermbg=none
+highlight CursorLineNr cterm=none ctermfg=Cyan ctermbg=none
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
