@@ -10,16 +10,15 @@ alias curl='curl --ipv4'
 alias gt='git log --oneline --decorate --graph --color --all'
 
 alias objdump='otool -tV'
-alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes--leak-check=full --show-leak-kinds=all'
+alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
 
 alias server='jekyll server --watch'
-
-alias doe='http_proxy=filtr.nycboe.org:8002'
 
 alias app='xattr -d com.apple.quarantine'
 
 alias vi='vim'
 alias vima='vim'
+alias cd..='cd ..'
 
 alias 411='man'
 alias 911='sudo'

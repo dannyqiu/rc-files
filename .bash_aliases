@@ -1,5 +1,6 @@
 # Alias definitions.
 alias ..='cd ..'
+alias cd..='cd ..'
 alias l='ls -lF'
 alias la='ls -A'
 alias ll='ls -alF'
