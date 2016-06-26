@@ -15,6 +15,12 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+if [[ $- == *i* ]]
+then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+fi
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=2000
 HISTFILESIZE=5000
