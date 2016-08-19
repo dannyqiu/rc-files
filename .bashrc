@@ -29,6 +29,9 @@ HISTFILESIZE=5000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# autocomplete only directories with cd
+complete -d cd
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
@@ -63,7 +66,8 @@ function prompt_command {
         fi
     fi
 
-    prompt="${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
+    current_time="[$(date +%H:%M:%S)] "
+    prompt="${OFF}${CYAN}${current_time}${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
 
     if [ ${exitstatus} -eq 0 ]; then
         PS1="${prompt} ${GREEN}ᐅ ${OFF}${YELLOW}${BOLD}"
@@ -97,3 +101,8 @@ fi
 
 #export LC_CTYPE=C
 #export LANG=C
+
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+bind '"\eOA": history-search-backward'
+bind '"\eOB": history-search-forward'
