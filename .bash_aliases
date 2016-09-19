@@ -13,6 +13,8 @@ alias gt='git log --oneline --decorate --graph --color --all'
 alias v='vim'
 alias vi='vim'
 
+alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
+
 function rm() {
     if [ "$#" -eq "1" ]; then
         return
