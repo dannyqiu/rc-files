@@ -5,9 +5,11 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'hdima/python-syntax'
+Plugin 'vim-scripts/indentpython.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'justinmk/vim-syntax-extra'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'let-def/ocp-indent-vim'
 Plugin 'othree/html5.vim'
 Plugin 'groenewege/vim-less'
 Plugin 'tpope/vim-liquid'
@@ -20,14 +22,6 @@ Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
 filetype plugin indent on
-
-" Use tabs instead of spaces for Makefile
-if @% != 'Makefile'
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-endif
 
 set si
 set autoindent
@@ -68,6 +62,7 @@ command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Key Mappings
 " ==================
+let mapleader = "\<Space>"
 " Prevent Ex Mode
 map Q <Nop>
 " Make it easier on the fingers
@@ -77,7 +72,39 @@ MapToggle <C-e> spell
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
 
-let python_highlight_all = 1
-let javascript_enable_domhtmlcss = 1
+" ======== file specific ========
 
-" For vim-airline
+" Use tabs instead of spaces for Makefile
+if @% != 'Makefile'
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
+endif
+
+" Use two spaces in yaml files
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" python support
+let python_highlight_all = 1
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+" javascript support
+let javascript_enable_domhtmlcss = 1
+" ocaml support
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+set rtp+=~/.vim/bundle/ocp-indent-vim
+autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80 expandtab
+" ruby support
+autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+
+" For you-complete-me
+let g:ycm_disable_for_files_larger_than_kb = 1000
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
