@@ -53,9 +53,9 @@ function prompt_command {
 
     changes=`git status -s 2> /dev/null | wc -l | sed -e 's/ *//'`
     if [ ${changes} -eq 0 ]; then
-        dirty=" ${GREEN}✔${OFF}"
+        dirty=" ${GREEN}v${OFF}"
     else
-        dirty=" ${RED}✘${OFF}"
+        dirty=" ${RED}x${OFF}"
     fi
     branch=`git symbolic-ref HEAD 2> /dev/null | cut -f3 -d/`
     if [ ! -z ${branch} ]; then
@@ -70,9 +70,9 @@ function prompt_command {
     prompt="${OFF}${CYAN}${current_time}${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
 
     if [ ${exitstatus} -eq 0 ]; then
-        PS1="${prompt} ${GREEN}ᐅ ${OFF}${YELLOW}${BOLD}"
+        PS1="${prompt} ${GREEN}> ${OFF}${YELLOW}${BOLD}"
     else
-        PS1="${prompt} ${RED}ᐅ ${OFF}${YELLOW}${BOLD}"
+        PS1="${prompt} ${RED}> ${OFF}${YELLOW}${BOLD}"
     fi
     trap 'echo -ne "\033[0m"' DEBUG
 
