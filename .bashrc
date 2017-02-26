@@ -101,6 +101,7 @@ fi
 
 #export LC_CTYPE=C
 #export LANG=C
+export EDITOR=vim
 
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'

@@ -17,7 +17,7 @@ source $ZSH/oh-my-zsh.sh
 #export LC_CTYPE=C
 #export LANG=C
 
-export EDITOR="/usr/local/bin/vim"
+export EDITOR=vim
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
