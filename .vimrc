@@ -24,6 +24,9 @@ call vundle#end()
 
 filetype plugin indent on
 
+set wildmenu
+set wildignore="*.o,*~,*.pyc,*.class"
+
 set si
 set autoindent
 set smartindent
