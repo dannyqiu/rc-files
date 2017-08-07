@@ -1,5 +1,5 @@
 alias reload='source ~/.zshrc'
-alias config='vim ~/.zsh-aliases.zsh'
+alias config='vim ~/.zsh_aliases.zsh'
 alias ohmyzsh='cd ~/.oh-my-zsh'
 
 alias quit='bye'

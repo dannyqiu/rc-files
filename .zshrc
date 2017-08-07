@@ -29,8 +29,8 @@ export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/Danny/Library/sox-14.4.0:/Users/Danny/Library/bin
 
 # Source aliases from another file
-if [[ -e $HOME/.zsh-aliases.zsh ]]; then
-    source $HOME/.zsh-aliases.zsh
+if [[ -e $HOME/.zsh_aliases.zsh ]]; then
+    source $HOME/.zsh_aliases.zsh
 fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
