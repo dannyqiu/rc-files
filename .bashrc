@@ -99,6 +99,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
+
 #export LC_CTYPE=C
 #export LANG=C
 export EDITOR=vim
