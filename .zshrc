@@ -23,15 +23,19 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export JUNIT_HOME=/usr/local/share/junit
-export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:.
+export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar:$JAVA_HOME/jre/lib/ext/jfxrt.jar:.
 
 # Customize to your needs...
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/Danny/Library/sox-14.4.0:/Users/Danny/Library/bin
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/Danny/Library/sox-14.4.0:/Users/Danny/Library/bin
 
 # Source aliases from another file
 if [[ -e $HOME/.zsh_aliases.zsh ]]; then
     source $HOME/.zsh_aliases.zsh
 fi
 
+# OPAM configuration
+. /Users/Danny/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# rvm configuration
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
