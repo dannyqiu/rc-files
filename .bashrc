@@ -66,8 +66,9 @@ function prompt_command {
         fi
     fi
 
-    current_time="[$(date +%H:%M:%S)] "
-    prompt="\[\e]0;\W\a\]${OFF}${CYAN}${current_time}${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
+    window_title="\[\e]0;\W\a\]"
+    current_time="[\t] "
+    prompt="${window_title}${OFF}${CYAN}${current_time}${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
 
     if [ ${exitstatus} -eq 0 ]; then
         PS1="${prompt} ${GREEN}> ${OFF}${YELLOW}${BOLD}"
