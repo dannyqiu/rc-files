@@ -1,5 +1,10 @@
 git
 htop
-ipython2
+ipython
 ipython3
+python-pip
+python3-pip
+default-jdk
 vim-nox
+tmux
+silversearcher-ag
