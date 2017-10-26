@@ -99,16 +99,26 @@ if 'VIRTUAL_ENV' in os.environ:
   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
   execfile(activate_this, dict(__file__=activate_this))
 EOF
+
 " javascript support
 let javascript_enable_domhtmlcss = 1
+
 " ocaml support
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 set rtp+=~/.vim/bundle/ocp-indent-vim
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80 expandtab
+
 " ruby support
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 
 " For you-complete-me
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+augroup load_ycm
+  autocmd!
+  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+                                \ | autocmd! load_ycm
+augroup END
+let g:ycm_python_binary_path = 'python'
 let g:ycm_disable_for_files_larger_than_kb = 1000
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
