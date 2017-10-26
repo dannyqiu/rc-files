@@ -34,7 +34,7 @@ if [[ -e $HOME/.zsh_aliases.zsh ]]; then
 fi
 
 # OPAM configuration
-. /Users/Danny/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # rvm configuration
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

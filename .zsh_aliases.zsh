@@ -1,4 +1,4 @@
-alias reload='source ~/.zshrc'
+alias reload='exec $SHELL -l'
 alias config='vim ~/.zsh_aliases.zsh'
 alias ohmyzsh='cd ~/.oh-my-zsh'
 
@@ -22,14 +22,14 @@ alias cd..='cd ..'
 
 alias 411='man'
 alias 911='sudo'
-alias ip='curl canihazip.com/s'
+alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 function gitchangedate() {
     if [[ "$#" -ne 1 ]]; then
         date=$(date "+%a %b %-d %T %Y %z")
         echo 'Usage:\n\tgitchangedate "'$date'"'
     else
-        GIT_COMMITTER_DATE="$1" GIT_AUTHOR_DATE="$1" git commit --amend --date "$1" 
+        GIT_COMMITTER_DATE="$1" GIT_AUTHOR_DATE="$1" git commit --amend --date "$1"
     fi
 }
 
@@ -73,3 +73,5 @@ function jrun() {
         rm -f *.class
     fi
 }
+
+export OCAMLRUNPARAM=b
