@@ -6,6 +6,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'hdima/python-syntax'
 Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-jp/vim-java'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'justinmk/vim-syntax-extra'
@@ -35,6 +36,7 @@ set mouse=a " Mouse does not select line numbers
 syntax on
 set synmaxcol=356
 
+set incsearch " Search while typing
 set hlsearch " Highlight searches
 set ignorecase " Ignore case in searches
 
@@ -46,6 +48,9 @@ set cursorline
 highlight CursorLine cterm=none ctermfg=none ctermbg=none
 highlight LineNr cterm=none ctermfg=Brown ctermbg=none
 highlight CursorLineNr cterm=none ctermfg=Cyan ctermbg=none
+
+set ttyfast
+set lazyredraw
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
