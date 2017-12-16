@@ -15,6 +15,10 @@ alias vi='vim'
 
 alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
 
+alias 411='man'
+alias 911='sudo'
+alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+
 function rm() {
     if [ "$#" -eq "1" ]; then
         return
