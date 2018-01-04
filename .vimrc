@@ -10,9 +10,9 @@ Plugin 'vim-jp/vim-java'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'justinmk/vim-syntax-extra'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'let-def/ocp-indent-vim'
 Plugin 'othree/html5.vim'
+Plugin 'leshill/vim-json'
 Plugin 'groenewege/vim-less'
 Plugin 'tpope/vim-liquid'
 Plugin 'tpope/vim-surround'
@@ -26,7 +26,7 @@ call vundle#end()
 filetype plugin indent on
 
 set wildmenu
-set wildignore="*.o,*~,*.pyc,*.class"
+set wildignore="*.o,*~,*.pyc,*.class,*.byte"
 
 set si
 set autoindent
@@ -126,4 +126,5 @@ augroup load_ycm
 augroup END
 let g:ycm_python_binary_path = 'python'
 let g:ycm_disable_for_files_larger_than_kb = 1000
+let g:ycm_confirm_extra_conf = 0
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
