@@ -96,7 +96,16 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " python support
 let python_highlight_all = 1
-py3 << EOF
+" make vim python-version agnostic
+if has('python')
+    command! -nargs=1 Py python <args>
+elseif has('python3')
+    command! -nargs=1 Py python3 <args>
+else
+    echo "Error: Requires Vim compiled with +python or +python3"
+    finish
+endif
+Py << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
