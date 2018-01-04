@@ -1,34 +1,33 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'hdima/python-syntax'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-jp/vim-java'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'justinmk/vim-syntax-extra'
-Plugin 'let-def/ocp-indent-vim'
-Plugin 'othree/html5.vim'
-Plugin 'leshill/vim-json'
-Plugin 'groenewege/vim-less'
-Plugin 'tpope/vim-liquid'
-Plugin 'tpope/vim-surround'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Valloric/YouCompleteMe'
-call vundle#end()
+call plug#begin()
+Plug 'gmarik/Vundle.vim'
+Plug 'hdima/python-syntax'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
+Plug 'vim-jp/vim-java'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'let-def/ocp-indent-vim'
+Plug 'othree/html5.vim'
+Plug 'leshill/vim-json'
+Plug 'groenewege/vim-less'
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-surround'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'vim-scripts/DrawIt'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Valloric/YouCompleteMe'
+call plug#end()
 
 filetype plugin indent on
 
 set wildmenu
 set wildignore="*.o,*~,*.pyc,*.class,*.byte"
 
-set si
 set autoindent
 set smartindent
 set number
@@ -77,6 +76,9 @@ map Q <Nop>
 " Make it easier on the fingers
 imap <C-c> <Esc>
 MapToggle <C-e> spell
+" Abbreviations for typos
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
 
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
@@ -96,23 +98,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " python support
 let python_highlight_all = 1
-" make vim python-version agnostic
-if has('python')
-    command! -nargs=1 Py python <args>
-elseif has('python3')
-    command! -nargs=1 Py python3 <args>
-else
-    echo "Error: Requires Vim compiled with +python or +python3"
-    finish
-endif
-Py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+let g:virtualenv_auto_activate = 1
 
 " javascript support
 let javascript_enable_domhtmlcss = 1
@@ -133,7 +119,7 @@ augroup load_ycm
   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
                                 \ | autocmd! load_ycm
 augroup END
-let g:ycm_python_binary_path = 'python'
+let g:ycm_python_binary_path = 'python3'
 let g:ycm_disable_for_files_larger_than_kb = 1000
 let g:ycm_confirm_extra_conf = 0
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
