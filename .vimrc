@@ -96,7 +96,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " python support
 let python_highlight_all = 1
-py << EOF
+py3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
