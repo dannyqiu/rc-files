@@ -20,27 +20,45 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer' }
 call plug#end()
 
 filetype plugin indent on
 
-set wildmenu
-set wildignore="*.o,*~,*.pyc,*.class,*.byte"
+set ttyfast         " Enable on fast terminal connection (local)
+set lazyredraw      " Buffer redraws
+set noerrorbells    " Disable annoying error tone
+set novisualbell    " Disable annoying visual error
 
-set autoindent
-set smartindent
-set number
-set mouse=a " Mouse does not select line numbers
-syntax on
-set synmaxcol=356
+set laststatus=2    " Show status line on all windows, not just on splits
+set wildmenu        " Autocompletion menu
+set wildignore=*.o,*~,*.pyc,*.class,*.byte " Ignore compiled files
 
-set incsearch " Search while typing
-set hlsearch " Highlight searches
-set ignorecase " Ignore case in searches
+set backspace=indent,eol,start " Fix problem with backspace key
+set mouse=a         " Allow using mouse
 
+set number          " Show line numbers
+set scrolloff=3     " Start scrolling before the reaching borders
+
+set autoindent      " Enable auto-indenting
+set smartindent     " Indent based on syntax
+set tabstop=4       " Tab size
+set softtabstop=4   " Tabs as spaces
+set shiftwidth=4    " Automatic indent
+set expandtab       " Use spaces instead of tabs
+
+syntax on           " Enable syntax hightlighting
+set synmaxcol=356   " Maximum number of characters per line to highlight
+
+set incsearch       " Search while typing
+set hlsearch        " Highlight searches
+set ignorecase      " Ignore case in searches
+set wrapscan        " Automatically search from bottom once bottom is reached
+
+colorscheme default " Use default colors
+
+set cursorline      " Highlight current line
 highlight Comment ctermfg=DarkGrey
-set cursorline
 " highlight Cursorline cterm=none ctermbg=236
 " autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
 " autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
@@ -48,34 +66,24 @@ highlight CursorLine cterm=none ctermfg=none ctermbg=none
 highlight LineNr cterm=none ctermfg=Brown ctermbg=none
 highlight CursorLineNr cterm=none ctermfg=Cyan ctermbg=none
 
-set ttyfast
-set lazyredraw
-
-" Start scrolling three lines before the horizontal window border
-set scrolloff=3
-
-" Fix problem with backspace key
-set backspace=indent,eol,start
-
-" Show status line on all windows, not just on splits
-set laststatus=2
-
 " Map key to toggle opt
-function MapToggle(key, opt)
+function! MapToggle(key, opt)
     let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
     exec 'nnoremap '.a:key.' '.cmd
     exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
+command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Key Mappings
 " ==================
-let mapleader = "\<Space>"
 " Prevent Ex Mode
 map Q <Nop>
 " Make it easier on the fingers
-imap <C-c> <Esc>
-MapToggle <C-e> spell
+inoremap <C-c> <Esc>
+" Spell check in one keystroke
+MapToggle <leader>ss spell
+" Pase mode in one keystroke
+MapToggle <leader>pp paste
 " Abbreviations for typos
 cnoreabbrev Wq wq
 cnoreabbrev wQ wq
@@ -86,39 +94,63 @@ cmap w!! w !sudo tee > /dev/null %
 " ======== file specific ========
 
 " Use tabs instead of spaces for Makefile
-if @% != 'Makefile'
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-endif
+augroup ft_make
+    autocmd!
+    autocmd FileType make setlocal ts=8 sts=0 sw=8 noexpandtab
+augroup END
 
 " Use two spaces in yaml files
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup ft_yaml
+    autocmd!
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2
+augroup END
 
 " python support
-let python_highlight_all = 1
-let g:virtualenv_auto_activate = 1
+augroup ft_python
+    let python_highlight_all = 1
+    let g:virtualenv_auto_activate = 1
+augroup END
 
 " javascript support
-let javascript_enable_domhtmlcss = 1
+augroup ft_javascript
+    let javascript_enable_domhtmlcss = 1
+augroup END
+
+" java support
+augroup ft_java
+    autocmd!
+    autocmd Filetype pde syntax=java
+    let java_comment_strings=1
+    let java_highlight_java_lang_ids=1
+    let java_mark_braces_in_parens_as_errors=1
+    let java_highlight_all=1
+    let java_highlight_debug=1
+    let java_ignore_javadoc=1
+    let java_highlight_java_lang_ids=1
+    let java_highlight_functions="style"
+    let java_minlines = 150
+augroup END
 
 " ocaml support
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-set rtp+=~/.vim/bundle/ocp-indent-vim
-autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80 expandtab
+function! OcamlHelper()
+    let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+    execute "set rtp+=" . g:opamshare . "/merlin/vim"
+    setlocal ts=2 sts=2 sw=2 tw=80 cc=80
+endfunction
+
+augroup ft_ocaml
+    autocmd!
+    autocmd FileType ocaml call OcamlHelper()
+augroup END
 
 " ruby support
-autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+augroup ft_ruby
+    autocmd!
+    autocmd FileType ruby setlocal ts=2 sts=2 sw=2
+augroup END
 
 " For you-complete-me
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-augroup load_ycm
-  autocmd!
-  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
-                                \ | autocmd! load_ycm
-augroup END
 let g:ycm_python_binary_path = 'python3'
 let g:ycm_disable_for_files_larger_than_kb = 1000
 let g:ycm_confirm_extra_conf = 0

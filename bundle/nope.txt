@@ -1,1 +1,0 @@
-Don't add stuff to this directly. It should be automatically populated with plugins from Vundle.
