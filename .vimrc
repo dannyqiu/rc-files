@@ -59,12 +59,11 @@ colorscheme default " Use default colors
 
 set cursorline      " Highlight current line
 highlight Comment ctermfg=DarkGrey
-" highlight Cursorline cterm=none ctermbg=236
-" autocmd InsertEnter * highlight Cursorline cterm=none ctermbg=None
-" autocmd InsertLeave * highlight Cursorline cterm=none ctermbg=236
 highlight CursorLine cterm=none ctermfg=none ctermbg=none
 highlight LineNr cterm=none ctermfg=Brown ctermbg=none
 highlight CursorLineNr cterm=none ctermfg=Cyan ctermbg=none
+highlight Pmenu cterm=none ctermfg=15 ctermbg=52
+highlight PmenuSel cterm=bold ctermfg=255 ctermbg=234
 
 " Map key to toggle opt
 function! MapToggle(key, opt)
@@ -76,22 +75,32 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 " Key Mappings
 " ==================
+set timeoutlen=1000 " Set mapping delay timeout
+set ttimeoutlen=0   " Set key code delay timeout
 " Prevent Ex Mode
 map Q <Nop>
 " Make it easier on the fingers
 inoremap <C-c> <Esc>
 " Spell check in one keystroke
 MapToggle <leader>ss spell
-" Pase mode in one keystroke
+" Paste mode in one keystroke
 MapToggle <leader>pp paste
 " Abbreviations for typos
 cnoreabbrev Wq wq
 cnoreabbrev wQ wq
+" Keep visual selection when (un)indenting
+vnoremap < <gv
+vnoremap > >gv
 
 " Use w!! to write if file requires sudo permissions
 cmap w!! w !sudo tee > /dev/null %
 
 " ======== file specific ========
+" Disable cursorline in vim script because regexes are slow
+augroup ft_vim
+    autocmd!
+    autocmd FileType vim setlocal nocursorline
+augroup END
 
 " Use tabs instead of spaces for Makefile
 augroup ft_make
@@ -151,7 +160,8 @@ augroup END
 
 " For you-complete-me
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python3'
 let g:ycm_disable_for_files_larger_than_kb = 1000
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_seed_identifiers_with_syntax = 1
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
