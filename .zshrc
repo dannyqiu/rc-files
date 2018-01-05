@@ -25,7 +25,7 @@ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export JUNIT_HOME=/usr/local/share/junit
 export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar:$JAVA_HOME/jre/lib/ext/jfxrt.jar:.
 
-PS1="%{$PROMPT_SUCCESS_COLOR%}% [%D{%H:%M:%S}] %{$reset_color%}% $PS1"
+PS1="%{\$PROMPT_SUCCESS_COLOR%}% [%D{%H:%M:%S}] %{\$reset_color%}% $PS1"
 
 # Customize to your needs...
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/Users/Danny/Library/sox-14.4.0:/Users/Danny/Library/bin
