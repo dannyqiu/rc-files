@@ -21,6 +21,7 @@ Plug 'vim-scripts/DrawIt'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer' }
+Plug 'darfink/vim-plist'
 call plug#end()
 
 filetype plugin indent on
@@ -29,6 +30,7 @@ set ttyfast         " Enable on fast terminal connection (local)
 set lazyredraw      " Buffer redraws
 set noerrorbells    " Disable annoying error tone
 set novisualbell    " Disable annoying visual error
+"set belloff=all     " Actually disable bell tone
 
 set laststatus=2    " Show status line on all windows, not just on splits
 set wildmenu        " Autocompletion menu
@@ -156,6 +158,12 @@ augroup END
 augroup ft_ruby
     autocmd!
     autocmd FileType ruby setlocal ts=2 sts=2 sw=2
+augroup END
+
+" mac plist support
+augroup ft_plist
+    let g:plist_display_format = 'xml'
+    let g:plist_save_format = 'binary'
 augroup END
 
 " For you-complete-me
