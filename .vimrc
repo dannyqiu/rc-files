@@ -15,13 +15,13 @@ Plug 'othree/html5.vim'
 Plug 'leshill/vim-json'
 Plug 'groenewege/vim-less'
 Plug 'tpope/vim-liquid'
+Plug 'darfink/vim-plist'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer' }
-Plug 'darfink/vim-plist'
 call plug#end()
 
 filetype plugin indent on
@@ -104,6 +104,11 @@ augroup ft_vim
     autocmd FileType vim setlocal nocursorline
 augroup END
 
+augroup ft_zsh
+    autocmd!
+    autocmd FileType zsh setlocal nocursorline
+augroup END
+
 " Use tabs instead of spaces for Makefile
 augroup ft_make
     autocmd!
@@ -166,10 +171,22 @@ augroup ft_plist
     let g:plist_save_format = 'binary'
 augroup END
 
-" For you-complete-me
+" for you-complete-me
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python3'
 let g:ycm_disable_for_files_larger_than_kb = 1000
 let g:ycm_seed_identifiers_with_syntax = 1
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" for large files
+let g:airline_extensions = []
+let g:LargeFile = 10 * 1024 * 1024
+augroup LargeFile
+    autocmd!
+    autocmd BufReadPre * let f=expand("<afile>") |
+                \ if getfsize(f) > g:LargeFile |
+                \ set eventignore+=FileType |
+                \ setlocal noswapfile bufhidden=unload undolevels=10 |
+                \ endif
+augroup END
