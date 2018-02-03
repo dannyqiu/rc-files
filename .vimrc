@@ -171,6 +171,16 @@ augroup ft_plist
     let g:plist_save_format = 'binary'
 augroup END
 
+augroup ft_flex
+    autocmd!
+    autocmd FileType flex setlocal ts=2 sts=2 sw=2
+augroup END
+
+augroup ft_tex
+    autocmd!
+    autocmd FileType tex setlocal ts=2 sts=2 sw=2 nocursorline
+augroup END
+
 " for you-complete-me
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
