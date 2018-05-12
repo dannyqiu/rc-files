@@ -1,5 +1,4 @@
 alias reload='exec $SHELL -l'
-alias config='vim ~/.zsh_aliases.zsh'
 alias ohmyzsh='cd ~/.oh-my-zsh'
 
 alias quit='bye'
@@ -16,12 +15,14 @@ alias server='jekyll server --watch'
 
 alias app='xattr -d com.apple.quarantine'
 
+alias v='vim'
 alias vi='vim'
 alias vima='vim'
 alias cd..='cd ..'
 
 alias 411='man'
 alias 911='sudo'
+alias uuid='python -c "import uuid; print(uuid.uuid4())"'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 function gitchangedate() {
@@ -34,10 +35,37 @@ function gitchangedate() {
 }
 
 function swap() {
-    TMP_FILE=$1'-$RANDOM.$RANDOM'
-    mv $2 $TMP_FILE
-    mv $1 $2
-    mv $TMP_FILE $2
+    TMP_FILE="$1-$RANDOM.$RANDOM"
+    mv "$2" "$TMP_FILE"
+    mv "$1" "$2"
+    mv "$TMP_FILE" "$2"
+}
+
+_SYSTEM_RM=`whereis rm`
+function rm() {
+    ORIGINAL_ARGS=("$@")
+    TO_TRASH=true
+    VERBOSITY=false
+    while getopts ":if" opt; do
+        case "$opt" in
+            f)
+                TO_TRASH=false
+                ;;
+            i)
+                VERBOSITY=true
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+    if [ "$TO_TRASH" = true ]; then
+        if [ "$VERBOSITY" = true ]; then
+            mv -v "$@" ~/.Trash
+        else
+            mv "$@" ~/.Trash
+        fi
+    else
+        $_SYSTEM_RM $ORIGINAL_ARGS
+    fi
 }
 
 alias javal='java -cp $JAVA_LIBRARY_CLASSPATH'
