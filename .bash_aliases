@@ -1,5 +1,9 @@
 # Alias definitions.
 alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 alias cd..='cd ..'
 alias l='ls -lF'
 alias la='ls -A'

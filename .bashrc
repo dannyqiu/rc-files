@@ -104,6 +104,9 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
+# disables the scroll lock feature with ctrl+s on some terminal emulators
+stty -ixon
+
 #export LC_CTYPE=C
 #export LANG=C
 export EDITOR=vim
