@@ -10,7 +10,7 @@ ZSH_THEME="muse"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -36,7 +36,7 @@ if [[ -e $HOME/.zsh_aliases.zsh ]]; then
 fi
 
 # OPAM configuration
-. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+source $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # rvm configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
