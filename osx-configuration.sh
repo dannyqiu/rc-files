@@ -52,6 +52,22 @@ defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"lis
 defaults write /Library/Preferences/com.apple.SpotlightServer.plist ExternalVolumesDefaultOff -bool true
 
 ################################################################################
+# Dock
+################################################################################
+
+# Lock the size of the dock
+defaults write com.apple.dock size-immutable -bool yes
+
+# Lock the position of the dock
+defaults write com.apple.dock position-immutable -bool yes
+
+# Set the size of the dock icons
+defaults write com.apple.dock tilesize -int 40
+
+# Auto-hide the dock
+defaults write com.apple.dock autohide -bool yes
+
+################################################################################
 # Safari
 ################################################################################
 
