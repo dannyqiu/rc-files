@@ -119,3 +119,5 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Get SF Mono Fonts (OS X Sierra +)
 cp -v /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-* ~/Library/Fonts
 
+# Allow key-repeat in VSCode
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
