@@ -62,12 +62,12 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X
 # For a full list of active aliases, run `alias`.
 #
 # Source aliases from another file
-if [[ -e $HOME/.zsh_aliases.zsh ]]; then
-    source $HOME/.zsh_aliases.zsh
+if [[ -e "$HOME/.zsh_aliases.zsh" ]]; then
+    source "$HOME/.zsh_aliases.zsh"
 fi
 
 # OPAM Configuration
-test -r /Users/danny/.opam/opam-init/init.zsh && . /Users/danny/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh"# > /dev/null 2> /dev/null || true
 
 # RVM Configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
