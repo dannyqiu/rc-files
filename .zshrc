@@ -33,6 +33,9 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+# Enable ZSH bracket-paste-magic hack to speed up pasting with syntax highlighting enabled
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
