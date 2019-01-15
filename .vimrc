@@ -15,6 +15,7 @@ Plug 'othree/html5.vim'
 Plug 'leshill/vim-json'
 Plug 'groenewege/vim-less'
 Plug 'tpope/vim-liquid'
+Plug 'pedrohdz/vim-yaml-folds', { 'for': 'yaml' }
 Plug 'darfink/vim-plist'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
