@@ -1,3 +1,4 @@
+# Reload the shell (i.e. invoke as a login shell)
 alias reload='exec $SHELL -l'
 alias ohmyzsh='cd ~/.oh-my-zsh'
 
@@ -11,8 +12,6 @@ alias gt='git log --oneline --decorate --graph --color --all'
 alias objdump='otool -tV'
 alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
 
-alias server='jekyll server --watch'
-
 alias app='xattr -d com.apple.quarantine'
 
 alias v='vim'
@@ -22,8 +21,16 @@ alias cd..='cd ..'
 
 alias 411='man'
 alias 911='sudo'
-alias uuid='python -c "import uuid; print(uuid.uuid4())"'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias uuid='python -c "import uuid; print(uuid.uuid4())"'
+alias sha256='shasum -a 256'
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
 
 function gitchangedate() {
     if [[ "$#" -ne 1 ]]; then
@@ -41,8 +48,7 @@ function swap() {
     mv "$TMP_FILE" "$2"
 }
 
-_SYSTEM_RM=`whereis rm`
-function rm() {
+function safe_rm() {
     ORIGINAL_ARGS=("$@")
     TO_TRASH=true
     VERBOSITY=false
@@ -64,9 +70,10 @@ function rm() {
             mv "$@" ~/.Trash
         fi
     else
-        $_SYSTEM_RM $ORIGINAL_ARGS
+        \rm $ORIGINAL_ARGS
     fi
 }
+alias rm=safe_rm
 
 alias javal='java -cp $JAVA_LIBRARY_CLASSPATH'
 

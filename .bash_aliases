@@ -8,7 +8,6 @@ alias cd..='cd ..'
 alias l='ls -lF'
 alias la='ls -A'
 alias ll='ls -alF'
-alias rm='rm -i'
 
 alias gl='git pull'
 alias gp='git push'
@@ -22,8 +21,13 @@ alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagn
 alias 411='man'
 alias 911='sudo'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias uuid='python -c "import uuid; print(uuid.uuid4())"'
+alias sha256='shasum -a 256'
 
-function rm() {
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+function safe_rm() {
     if [ "$#" -eq "1" ]; then
         return
     fi
@@ -35,6 +39,7 @@ function rm() {
     /bin/rm -f ~/.trash/latest
     ln -s $DIR ~/.trash/latest
 }
+alias rm=safe_rm
 
 if [ "$(uname)" == "Darwin" ]; then
 # Do something under Mac OS X platform
