@@ -36,14 +36,14 @@ function safe_rm() {
     mkdir -p $DIR
     mv "$@" $DIR
 
-    /bin/rm -f ~/.trash/latest
+    \rm -f ~/.trash/latest
     ln -s $DIR ~/.trash/latest
 }
 alias rm=safe_rm
 
 if [ "$(uname)" == "Darwin" ]; then
 # Do something under Mac OS X platform
-alias ls='ls -G' # enable color support in ls
+    alias ls='ls -G' # enable color support in ls
 
 else
 # Do something under GNU/Linux platform

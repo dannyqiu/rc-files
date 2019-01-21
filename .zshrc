@@ -44,14 +44,14 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 # export LC_CTYPE=C
 # export LANG=C
-
-export EDITOR='vim'
+export EDITOR=vim
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export JUNIT_HOME=/usr/local/share/junit
 export JAVA_LIBRARY_CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.12.jar:$JUNIT_HOME/hamcrest-core-1.3.jar:.
+export OCAMLRUNPARAM=b
 
 # Update prompt with timestamp
 PS1="%{\$PROMPT_SUCCESS_COLOR%}% [%D{%H:%M:%S}] %{\$reset_color%}% $PS1"
@@ -70,7 +70,7 @@ if [[ -e "$HOME/.zsh_aliases.zsh" ]]; then
 fi
 
 # OPAM Configuration
-[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh"# > /dev/null 2> /dev/null || true
+[[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null || true
 
 # RVM Configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

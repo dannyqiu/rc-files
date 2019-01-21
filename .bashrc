@@ -19,6 +19,8 @@ if [[ $- == *i* ]]
 then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
+    bind '"\eOA": history-search-backward'
+    bind '"\eOB": history-search-forward'
 fi
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -81,6 +83,16 @@ function prompt_command {
 }
 PROMPT_COMMAND=prompt_command
 
+# disables the scroll lock feature with ctrl+s on some terminal emulators
+stty -ixon
+
+#export LC_CTYPE=C
+#export LANG=C
+export EDITOR=vim
+
+# Customize to your needs...
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/Library/bin:$PATH"
+
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
@@ -104,14 +116,9 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
-# disables the scroll lock feature with ctrl+s on some terminal emulators
-stty -ixon
+# OPAM Configuration
+[[ -r "$HOME/.opam/opam-init/init.sh" ]] && source "$HOME/.opam/opam-init/init.sh" > /dev/null 2> /dev/null || true
 
-#export LC_CTYPE=C
-#export LANG=C
-export EDITOR=vim
-
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-bind '"\eOA": history-search-backward'
-bind '"\eOB": history-search-forward'
+# RVM Configuration
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

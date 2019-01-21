@@ -108,5 +108,3 @@ function jrun() {
         rm -f *.class
     fi
 }
-
-export OCAMLRUNPARAM=b
