@@ -13,6 +13,16 @@ fi
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -boolean YES
 
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+# Require password 5 seconds after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 5
+
 ###############################################################################
 # Trackpad, Keyboard, Mouse
 ###############################################################################
@@ -66,6 +76,19 @@ defaults write com.apple.dock tilesize -int 40
 
 # Auto-hide the dock
 defaults write com.apple.dock autohide -bool yes
+
+# Show item info below desktop icons
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+
+# Enable snap-to-grid for desktop icons
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+################################################################################
+# Quicklook
+################################################################################
+
+# Allow text selection in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
 
 ################################################################################
 # Safari
@@ -121,3 +144,10 @@ cp -v /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-* ~/L
 
 # Allow key-repeat in VSCode
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+
+###############################################################################
+# Affected applications
+###############################################################################
+
+for app in Finder Dock Mail Safari SystemUIServer; do killall "$app" > /dev/null 2>&1; done
