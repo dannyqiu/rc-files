@@ -112,6 +112,7 @@ group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3
+#group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
+group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
 
 unset -f group_lazy_load
