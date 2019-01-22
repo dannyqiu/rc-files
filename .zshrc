@@ -105,7 +105,13 @@ group_lazy_load() {
     done
 }
 
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 group_lazy_load "$HOME/.rvm/scripts/rvm" rvm ruby gem rake
+
 group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3
+
 unset -f group_lazy_load
