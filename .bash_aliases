@@ -28,7 +28,7 @@ alias sha256='shasum -a 256'
 alias path='echo -e ${PATH//:/\\n}'
 
 function safe_rm() {
-    if [ "$#" -eq "1" ]; then
+    if [ "$#" -eq "0" ]; then
         return
     fi
     DIR=~/.trash/"$(date +'%c')"
