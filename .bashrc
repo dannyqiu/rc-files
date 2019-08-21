@@ -41,16 +41,28 @@ complete -d cd
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+function __get_terminal_column {
+    exec < /dev/tty
+    local oldstty=$(stty -g)
+    stty raw -echo min 0
+    echo -en "\033[6n" > /dev/tty
+    local pos
+    IFS=';' read -r -d R -a pos
+    stty $oldstty
+    echo "${pos[1]}"
+}
+
 function prompt_command {
     exitstatus="$?"
 
     BOLD="\[\033[1m\]"
-    RED="\[\033[0;38;5;9m\]"
-    GREEN="\[\033[0;38;5;10m\]"
-    BLUE="\[\033[0;38;5;27m\]"
-    PURPLE="\[\033[0;38;5;21m\]"
-    CYAN="\[\033[0;38;5;39m\]"
-    YELLOW="\[\033[0;38;5;226m\]"
+    RED="\[\033[38;5;9m\]"
+    GREEN="\[\033[38;5;10m\]"
+    BLUE="\[\033[38;5;27m\]"
+    PURPLE="\[\033[38;5;21m\]"
+    CYAN="\[\033[38;5;39m\]"
+    YELLOW="\[\033[38;5;226m\]"
+    INVERTED="\[\033[38;5;0m\]\033[48;5;255m\]"
     OFF="\[\033[0m\]"
 
     changes=`git status -s 2> /dev/null | wc -l | sed -e 's/ *//'`
@@ -80,11 +92,20 @@ function prompt_command {
     trap 'echo -ne "\033[0m"' DEBUG
 
     PS2="${BOLD}>${OFF} "
+
+    # Add inverted percent if previous output does not end in newline (zsh)
+    if [ "$(__get_terminal_column)" != 1 ]; then
+        PS1="${INVERTED}%${OFF}\n"$PS1
+        PS2="${INVERTED}%${OFF}\n"$PS2
+    fi
 }
 PROMPT_COMMAND=prompt_command
 
 # disables the scroll lock feature with ctrl+s on some terminal emulators
 stty -ixon
+
+# allow pasting from other applications without inserting bracketed paste symbols
+bind 'set enable-bracketed-paste on'
 
 #export LC_CTYPE=C
 #export LANG=C
