@@ -52,6 +52,20 @@ function __get_terminal_column {
     echo "${pos[1]}"
 }
 
+function __dir_chomp {
+    local IFS=/ c=1 n d
+    local p=(${1/#$HOME/\~}) r=${p[*]}
+    local s=${#r}
+    while ((s>$2&&c<${#p[*]}-1))
+    do
+        d=${p[c]}
+        n=1;[[ $d = .* ]]&&n=2
+        ((s-=${#d}-n))
+        p[c++]=${d:0:n}
+    done
+    echo "${p[*]}"
+}
+
 function prompt_command {
     exitstatus="$?"
 
@@ -59,30 +73,30 @@ function prompt_command {
     RED="\[\033[38;5;9m\]"
     GREEN="\[\033[38;5;10m\]"
     BLUE="\[\033[38;5;27m\]"
-    PURPLE="\[\033[38;5;21m\]"
+    PURPLE="\[\033[38;5;99m\]"
     CYAN="\[\033[38;5;39m\]"
     YELLOW="\[\033[38;5;226m\]"
     INVERTED="\[\033[38;5;0m\]\033[48;5;255m\]"
     OFF="\[\033[0m\]"
 
-    changes=`git status -s 2> /dev/null | wc -l | sed -e 's/ *//'`
-    if [ ${changes} -eq 0 ]; then
-        dirty=" ${GREEN}v${OFF}"
-    else
-        dirty=" ${RED}x${OFF}"
-    fi
-    branch=`git symbolic-ref HEAD 2> /dev/null | cut -f3 -d/`
+    branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
     if [ ! -z ${branch} ]; then
-        if [ ${branch} == "master" ]; then
-            branch=`echo " (${BLUE}${branch}${dirty}${OFF})"`
-        else
-            branch=`echo " (${PURPLE}${branch}${dirty}${OFF})"`
+        if [ ${branch} == "HEAD" ]; then
+            branch=$(git rev-parse --short HEAD 2> /dev/null)
         fi
+        changes=$(git status -s 2> /dev/null | wc -l | sed -e 's/ *//')
+        if [ ${changes} -eq 0 ]; then
+            dirty=" ${GREEN}v${OFF}"
+        else
+            dirty=" ${RED}x${OFF}"
+        fi
+        branch=" (${PURPLE}${branch}${dirty}${OFF})"
     fi
 
     window_title="\[\e]0;\W\a\]"
-    current_time="[\t] "
-    prompt="${window_title}${OFF}${CYAN}${current_time}${OFF}\u@\h: ${CYAN}\w${OFF}${branch}"
+    current_time="[\t]"
+    path="$(__dir_chomp "$PWD" 48)"
+    prompt="${window_title}${OFF}${CYAN}${current_time}${OFF} \u@\h: ${CYAN}${path}${OFF}${branch}"
 
     if [ ${exitstatus} -eq 0 ]; then
         PS1="${prompt} ${GREEN}> ${OFF}${YELLOW}${BOLD}"
