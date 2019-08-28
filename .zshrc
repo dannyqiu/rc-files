@@ -80,7 +80,7 @@ lazy_load() {
     # $2: file to source
     # $3: name of the command to run after it's loaded
     # $4+: argv to be passed to $3
-    echo "Lazy loading $1 ..."
+    echo "Lazy loading $1 ..." > /dev/tty
 
     # $1.split(' ') using the s flag. In bash, this can be simply ($1) #http://unix.stackexchange.com/questions/28854/list-elements-with-spaces-in-zsh
     # Single line won't work: local names=("${(@s: :)${1}}"). Due to http://stackoverflow.com/questions/14917501/local-arrays-in-zsh   (zsh 5.0.8 (x86_64-apple-darwin15.0))
@@ -112,7 +112,6 @@ group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-#group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
 group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
 
 unset -f group_lazy_load

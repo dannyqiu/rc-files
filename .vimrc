@@ -2,7 +2,6 @@ set nocompatible
 filetype off
 
 call plug#begin()
-Plug 'gmarik/Vundle.vim'
 Plug 'hdima/python-syntax'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
