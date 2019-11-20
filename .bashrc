@@ -8,6 +8,9 @@ case $- in
       *) return;;
 esac
 
+# use vim-like command editing
+#set -o vi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -66,6 +69,14 @@ function __dir_chomp {
     echo "${p[*]}"
 }
 
+function __refresh_tmux_env {
+  # fix tmux environment variables when attaching from different computers (needed for xclip)
+  if [ -n "$TMUX" ]; then
+    export DISPLAY="$(tmux show-environment -g DISPLAY | sed -n 's/^DISPLAY=//p')"
+    tmux set-environment DISPLAY $DISPLAY
+  fi
+}
+
 function prompt_command {
     exitstatus="$?"
 
@@ -103,7 +114,6 @@ function prompt_command {
     else
         PS1="${prompt} ${RED}> ${OFF}${YELLOW}${BOLD}"
     fi
-    trap 'echo -ne "\033[0m"' DEBUG
 
     PS2="${BOLD}>${OFF} "
 
@@ -112,6 +122,11 @@ function prompt_command {
         PS1="${INVERTED}%${OFF}\n"$PS1
         PS2="${INVERTED}%${OFF}\n"$PS2
     fi
+
+    # reset before each command:
+    #   - output colors
+    #   - tmux environment variables like DISPLAY
+    trap 'echo -ne "\033[0m"; __refresh_tmux_env' DEBUG
 }
 PROMPT_COMMAND=prompt_command
 
