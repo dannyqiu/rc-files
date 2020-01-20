@@ -117,4 +117,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 _group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
 
+# gcloud PATH and autocompletion
+GOOGLE_CLOUD_SDK_PATH="$HOME/Library/google-cloud-sdc"
+if [ -f "$GOOGLE_CLOUD_SDK_PATH/path.zsh.inc" ]; then
+    source "$GOOGLE_CLOUD_SDK_PATH/path.zsh.inc"
+    _group_lazy_load "$GOOGLE_CLOUD_SDK_PATH/completion.zsh.inc" gcloud gsutil
+fi
+
 unset -f _group_lazy_load
