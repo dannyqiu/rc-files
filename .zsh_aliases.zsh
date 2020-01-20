@@ -3,16 +3,8 @@ alias reload='exec $SHELL -l'
 alias ohmyzsh='cd ~/.oh-my-zsh'
 
 alias quit='bye'
-alias rm='rm -i'
 alias wget='wget -c'
 alias curl='curl --ipv4'
-
-alias gt='git log --oneline --decorate --graph --color --all'
-
-alias objdump='otool -tV'
-alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
-
-alias app='xattr -d com.apple.quarantine'
 
 alias v='vim'
 alias vi='vim'
@@ -24,6 +16,14 @@ alias 911='sudo'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias uuid='python -c "import uuid; print(uuid.uuid4())"'
 alias sha256='shasum -a 256'
+
+alias gt='git log --oneline --decorate --graph --color --all'
+alias gcamend='GIT_COMMITTER_NAME="$(git log -1 --pretty=format:%an)" GIT_COMMITTER_EMAIL="$(git log -1 --pretty=format:%ae)" git commit --amend'
+
+alias objdump='otool -tV'
+alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
+
+alias app='xattr -d com.apple.quarantine'
 
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"

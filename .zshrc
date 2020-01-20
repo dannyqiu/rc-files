@@ -68,7 +68,7 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X
 # For a full list of active aliases, run `alias`.
 #
 # Source aliases from another file
-if [[ -e "$HOME/.zsh_aliases.zsh" ]]; then
+if [ -f "$HOME/.zsh_aliases.zsh" ]; then
     source "$HOME/.zsh_aliases.zsh"
 fi
 
