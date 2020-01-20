@@ -77,13 +77,13 @@ fi
 # Credits: https://gist.github.com/QinMing/364774610afc0e06cc223b467abe83c0
 ################################################################################
 
-lazy_load() {
+_lazy_load() {
     # Act as a stub to another shell function/command. When first run, it will load the actual function/command then execute it.
     # $1: space separated list of alias to release after the first load
     # $2: file to source
     # $3: name of the command to run after it's loaded
     # $4+: argv to be passed to $3
-    echo "Lazy loading $1 ..." > /dev/tty
+    printf "Lazy loading $1 ...\r" > /dev/tty
 
     # $1.split(' ') using the s flag. In bash, this can be simply ($1) #http://unix.stackexchange.com/questions/28854/list-elements-with-spaces-in-zsh
     # Single line won't work: local names=("${(@s: :)${1}}"). Due to http://stackoverflow.com/questions/14917501/local-arrays-in-zsh   (zsh 5.0.8 (x86_64-apple-darwin15.0))
@@ -99,22 +99,22 @@ lazy_load() {
     $*
 }
 
-group_lazy_load() {
+_group_lazy_load() {
     local script
     script=$1
     shift 1
     for cmd in "$@"; do
-        alias $cmd="lazy_load \"$*\" $script $cmd"
+        alias $cmd="_lazy_load \"$*\" $script $cmd"
     done
 }
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-group_lazy_load "$HOME/.rvm/scripts/rvm" rvm ruby gem rake
+_group_lazy_load "$HOME/.rvm/scripts/rvm" rvm ruby gem rake
 
-group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
+_group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
+_group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
 
-unset -f group_lazy_load
+unset -f _group_lazy_load
