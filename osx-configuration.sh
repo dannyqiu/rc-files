@@ -61,6 +61,10 @@ defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"lis
 # Disable Spotlight indexing of external volumes by default
 defaults write /Library/Preferences/com.apple.SpotlightServer.plist ExternalVolumesDefaultOff -bool true
 
+# Improve performance of connecting to SMB shares (https://support.apple.com/en-us/HT205926)
+echo "net.inet.tcp.delayed_ack=2" | sudo tee -a /etc/sysctl.conf
+printf "[default]\nsigning_required=no" | sudo tee -a /etc/nsmb.conf
+
 ################################################################################
 # Dock
 ################################################################################
@@ -145,6 +149,9 @@ cp -v /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-* ~/L
 # Allow key-repeat in VSCode
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
+# Settings for https://rectangleapp.com
+defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
+defaults write com.knollsoft.Rectangle windowSnapping -int 2
 
 ###############################################################################
 # Affected applications
