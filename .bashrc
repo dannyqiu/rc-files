@@ -57,7 +57,7 @@ function __get_terminal_column {
 
 function __dir_chomp {
     local IFS=/ c=1 n d
-    local p=(${1/#$HOME/\~}) r=${p[*]}
+    local p=${1/#$HOME/\~} r=${p[*]}
     local s=${#r}
     while ((s>$2&&c<${#p[*]}-1))
     do
@@ -69,12 +69,46 @@ function __dir_chomp {
     echo "${p[*]}"
 }
 
+function __handle_path {
+    case "$1" in
+        *) __dir_chomp "$1" 48 ;;
+    esac
+}
+
+function __tmux_window_name() {
+    if [ -z "$TMUX" ]; then
+        return
+    fi
+    case "$PWD" in
+        *) tmux rename-window "$(basename "${PWD}")" ;;
+    esac
+}
+
 function __refresh_tmux_env {
-  # fix tmux environment variables when attaching from different computers (needed for xclip)
-  if [ -n "$TMUX" ]; then
-    export DISPLAY="$(tmux show-environment -g DISPLAY | sed -n 's/^DISPLAY=//p')"
-    tmux set-environment DISPLAY $DISPLAY
-  fi
+    # fix tmux environment variables when attaching from different computers (needed for xclip)
+    if [ -z "$TMUX" ]; then
+        return
+    fi
+    export DISPLAY="$(tmux show-environment -g DISPLAY 2> /dev/null | sed -n 's/^DISPLAY=//p')"
+    if [ -n "$DISPLAY" ]; then
+      tmux set-environment DISPLAY $DISPLAY
+    fi
+}
+
+function __pre_command {
+    printf '\033[0m'
+
+    # make sure that this only runs once per command
+    if [ -z "$RUN_PRE_COMMAND" ]; then
+      return
+    fi
+    unset RUN_PRE_COMMAN
+
+    # reset before each command:
+    #   - output colors
+    #   - tmux environment variables like DISPLAY
+    __refresh_tmux_env
+    return 0
 }
 
 function prompt_command {
@@ -106,29 +140,31 @@ function prompt_command {
 
     window_title="\[\e]0;\W\a\]"
     current_time="[\t]"
-    path="$(__dir_chomp "$PWD" 48)"
-    prompt="${window_title}${OFF}${CYAN}${current_time}${OFF} \u@\h: ${CYAN}${path}${OFF}${branch}"
-
+    host="\u@\h"
+    path="$(__handle_path "$PWD")"
     if [ ${exitstatus} -eq 0 ]; then
-        PS1="${prompt} ${GREEN}> ${OFF}${YELLOW}${BOLD}"
+      start_symbol="${GREEN}>${OFF}"
     else
-        PS1="${prompt} ${RED}> ${OFF}${YELLOW}${BOLD}"
+      start_symbol="${RED}>${OFF}"
     fi
+    prompt="${window_title}${OFF}${CYAN}${current_time} ${PURPLE}${host}: ${CYAN}${path}${OFF}${branch} ${start_symbol}"
 
-    PS2="${BOLD}>${OFF} "
+    PS1="${prompt} ${YELLOW}${BOLD}"
 
-    # Add inverted percent if previous output does not end in newline (zsh)
+    # Show inverted percent symbol if previous output does not end in newline (zsh behavior)
     if [ "$(__get_terminal_column)" != 1 ]; then
-        PS1="${INVERTED}%${OFF}\n"$PS1
-        PS2="${INVERTED}%${OFF}\n"$PS2
+        PS1="${INVERTED}%${OFF}\n${PS1}"
     fi
 
-    # reset before each command:
-    #   - output colors
-    #   - tmux environment variables like DISPLAY
-    trap 'echo -ne "\033[0m"; __refresh_tmux_env' DEBUG
+    PS2="${YELLOW}${BOLD}...)> "
+
+    # set the window name in tmux
+    __tmux_window_name
+
+    RUN_PRE_COMMAND=1
+    trap '__pre_command' DEBUG
 }
-PROMPT_COMMAND=prompt_command
+PROMPT_COMMAND='prompt_command'
 
 # disables the scroll lock feature with ctrl+s on some terminal emulators
 stty -ixon
