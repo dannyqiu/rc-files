@@ -90,7 +90,11 @@ function __refresh_tmux_env {
         return
     fi
     export DISPLAY="$(tmux show-environment -g DISPLAY 2> /dev/null | sed -n 's/^DISPLAY=//p')"
-    if [ -n "$DISPLAY" ]; then
+    if [ -z "$DISPLAY" ]; then
+      # if DISPLAY does not exist in the global environment, take it from the local
+      export DISPLAY="$(tmux show-environment DISPLAY 2> /dev/null | sed -n 's/^DISPLAY=//p')"
+    else
+      # match the local environment to that of the global
       tmux set-environment DISPLAY $DISPLAY
     fi
 }
@@ -142,10 +146,16 @@ function prompt_command {
     current_time="[\t]"
     host="\u@\h"
     path="$(__handle_path "$PWD")"
-    if [ ${exitstatus} -eq 0 ]; then
-      start_symbol="${GREEN}>${OFF}"
+    if [[ $EUID -eq 0 ]]; then
+      # Running as root
+      symbol="#"
     else
-      start_symbol="${RED}>${OFF}"
+      symbol=">"
+    fi
+    if [ ${exitstatus} -eq 0 ]; then
+      start_symbol="${GREEN}${symbol}${OFF}"
+    else
+      start_symbol="${RED}${symbol}${OFF}"
     fi
     prompt="${window_title}${OFF}${CYAN}${current_time} ${PURPLE}${host}: ${CYAN}${path}${OFF}${branch} ${start_symbol}"
 
@@ -208,3 +218,5 @@ fi
 # RVM Configuration
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+true
