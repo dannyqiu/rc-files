@@ -9,14 +9,12 @@ alias l='ls -lF'
 alias la='ls -A'
 alias ll='ls -alF'
 
-alias gl='git pull'
-alias gp='git push'
-alias gt='git log --oneline --decorate --graph --color --all'
+alias quit='exit'
+alias wget='wget -c'
 
 alias v='vim'
 alias vi='vim'
-
-alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
+alias vima='vim'
 
 alias 411='man'
 alias 911='sudo'
@@ -24,8 +22,24 @@ alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias uuid='python -c "import uuid; print(uuid.uuid4())"'
 alias sha256='shasum -a 256'
 
+alias valgrind='valgrind --trace-children=yes --read-var-info=yes --sigill-diagnostics=yes --leak-check=full --show-leak-kinds=all'
+
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Aliases for git
+alias gl='git pull'
+alias gp='git push'
+alias gt='git log --oneline --decorate --graph --color --all'
+alias gitchangecommitter='GIT_COMMITTER_NAME="$(git log -1 --pretty=format:%an)" GIT_COMMITTER_EMAIL="$(git log -1 --pretty=format:%ae)" git commit --amend --no-edit'
+function gitchangedate() {
+    if [[ "$#" -ne 1 ]]; then
+        date=$(date "+%a %b %-d %T %Y %z")
+        echo 'Usage:\n\tgitchangedate "'$date'"'
+    else
+        GIT_COMMITTER_DATE="$1" GIT_AUTHOR_DATE="$1" git commit --amend --no-edit --date "$1"
+    fi
+}
 
 function safe_rm() {
     if [ "$#" -eq "0" ]; then
