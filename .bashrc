@@ -106,7 +106,7 @@ function __pre_command {
     if [ -z "$RUN_PRE_COMMAND" ]; then
       return
     fi
-    unset RUN_PRE_COMMAN
+    unset RUN_PRE_COMMAND
 
     # reset before each command:
     #   - output colors
