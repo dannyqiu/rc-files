@@ -80,7 +80,7 @@ function __tmux_window_name() {
         return
     fi
     case "$PWD" in
-        *) tmux rename-window "$(basename "${PWD}")" ;;
+        *) tmux rename-window -t "${TMUX_PANE}" "$(basename "${PWD}")" ;;
     esac
 }
 
