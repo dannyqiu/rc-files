@@ -1,5 +1,13 @@
 set nocompatible
-filetype off
+
+function! SetupYCM(info)
+    !./install.py --clangd-completer --js-completer
+
+    " from https://github.com/ycm-core/YouCompleteMe#option-2-provide-the-flags-manually
+    let my_ycm_extra_conf_file = $HOME . "/.vim/.my_ycm_extra_conf.py"
+    call writefile(["def Settings( **kwargs ):"], my_ycm_extra_conf_file)
+    call writefile(["  return { 'flags': [ '-x', 'c++', '-Wall', '-Wextra', '-Werror' ] }"], my_ycm_extra_conf_file, 'a')
+endfun
 
 call plug#begin()
 Plug 'hdima/python-syntax'
@@ -15,16 +23,18 @@ Plug 'leshill/vim-json'
 Plug 'groenewege/vim-less'
 Plug 'tpope/vim-liquid'
 Plug 'pedrohdz/vim-yaml-folds', { 'for': 'yaml' }
+Plug 'tpope/vim-markdown', {'for': 'md'}
 Plug 'darfink/vim-plist'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer' }
+if has('mac')
+    Plug 'Valloric/YouCompleteMe', { 'do': function('SetupYCM') }
+endif
 call plug#end()
-
-filetype plugin indent on
 
 set ttyfast         " Enable on fast terminal connection (local)
 set lazyredraw      " Buffer redraws
@@ -171,6 +181,12 @@ augroup ft_plist
     let g:plist_save_format = 'binary'
 augroup END
 
+" Use tabs instead of spaces for xml
+augroup ft_xml
+    autocmd!
+    autocmd FileType xml setlocal ts=4 sts=0 sw=4 noexpandtab
+augroup END
+
 augroup ft_flex
     autocmd!
     autocmd FileType flex setlocal ts=2 sts=2 sw=2
@@ -182,11 +198,13 @@ augroup ft_tex
 augroup END
 
 " for you-complete-me
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.my_ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python3'
 let g:ycm_disable_for_files_larger_than_kb = 1000
 let g:ycm_seed_identifiers_with_syntax = 1
+highlight YcmErrorSection ctermfg=15 ctermbg=88
+highlight YcmWarningSign ctermfg=15 ctermbg=95
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " for large files
