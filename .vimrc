@@ -157,6 +157,11 @@ augroup ft_java
     let java_minlines = 150
 augroup END
 
+augroup ft_c
+    set cindent
+    set cinoptions=g0.5s,h0.5s,j1,(0,ws,Ws
+augroup END
+
 " ocaml support
 function! OcamlHelper()
     let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
