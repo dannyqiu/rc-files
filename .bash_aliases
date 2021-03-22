@@ -18,7 +18,7 @@ alias vima='vim'
 
 alias 411='man'
 alias 911='sudo'
-alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias uuid='python -c "import uuid; print(uuid.uuid4())"'
 alias sha256='shasum -a 256'
 
