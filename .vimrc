@@ -6,11 +6,11 @@ function! SetupYCM(info)
     " from https://github.com/ycm-core/YouCompleteMe#option-2-provide-the-flags-manually
     let my_ycm_extra_conf_file = $HOME . "/.vim/.my_ycm_extra_conf.py"
     call writefile(["def Settings( **kwargs ):"], my_ycm_extra_conf_file)
-    call writefile(["  return { 'flags': [ '-x', 'c++', '-Wall', '-Wextra', '-Werror' ] }"], my_ycm_extra_conf_file, 'a')
+    call writefile(["  return { 'flags': [ '-x', 'c++', '-Wall', '-Wextra', '-Werror', '-std=c++17' ] }"], my_ycm_extra_conf_file, 'a')
 endfun
 
 call plug#begin()
-Plug 'hdima/python-syntax'
+Plug 'vim-python/python-syntax'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 Plug 'vim-jp/vim-java'
