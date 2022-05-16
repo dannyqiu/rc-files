@@ -4,6 +4,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias cd.='cd .'
 alias cd..='cd ..'
 alias l='ls -lF'
 alias la='ls -A'
@@ -41,37 +42,58 @@ function gitchangedate() {
     fi
 }
 
-function safe_rm() {
-    if [ "$#" -eq "0" ]; then
-        return
-    fi
-    DIR=~/.trash/"$(date +'%c')"
-    DIR=${DIR// /_}
-    mkdir -p $DIR
-    mv "$@" $DIR
+# Some random helpful functions
+function uriencode() {
+  if [ "$#" -eq "0" ]; then
+    python3 -c "import urllib.parse; import sys; sys.stdout.write(urllib.parse.quote(sys.stdin.read()))"
+  else
+    python3 -c "import urllib.parse; import sys; sys.stdout.write(urllib.parse.quote(\"$1\"))"
+  fi
+}
 
-    \rm -f ~/.trash/latest
-    ln -s $DIR ~/.trash/latest
+function linecount() {
+  find . -name "$1" -exec wc -l {} \; | cut -d ' ' -f1 | paste -sd+ | bc
+}
+
+# Make rm safer by moving files into a ~/.trash directory instead
+# Use \rm if you want the native rm for one-off situations.
+function safe_rm() {
+  if [ "$#" -eq "0" ]; then
+      return
+  fi
+  DIR=~/.trash/"$(date +'%c')"
+  DIR=${DIR// /_}
+  mkdir -p $DIR
+  mv "$@" $DIR
+
+  \rm -f ~/.trash/latest
+  ln -s $DIR ~/.trash/latest
 }
 alias rm=safe_rm
 
+function __macos_configure() {
+  alias ls='ls -G' # enable color support in ls
+}
+
+function __linux_configure() {
+  alias xcopy='xclip -in -selection clipboard'
+  alias xpaste='xclip -out -selection clipboard'
+
+  # enable color support of ls and also add handy aliases
+  if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+  fi
+}
+
 if [ "$(uname)" == "Darwin" ]; then
-# Do something under Mac OS X platform
-    alias ls='ls -G' # enable color support in ls
-
+  __macos_configure
 else
-# Do something under GNU/Linux platform
-
-    # enable color support of ls and also add handy aliases
-    if [ -x /usr/bin/dircolors ]; then
-        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-        alias ls='ls --color=auto'
-        alias dir='dir --color=auto'
-        alias vdir='vdir --color=auto'
-
-        alias grep='grep --color=auto'
-        alias fgrep='fgrep --color=auto'
-        alias egrep='egrep --color=auto'
-    fi
-
+  __linux_configure
 fi

@@ -115,7 +115,7 @@ function __pre_command {
     return 0
 }
 
-function prompt_command {
+function __prompt_command {
     exitstatus="$?"
 
     BOLD="\[\033[1m\]"
@@ -174,7 +174,7 @@ function prompt_command {
     RUN_PRE_COMMAND=1
     trap '__pre_command' DEBUG
 }
-PROMPT_COMMAND='prompt_command'
+PROMPT_COMMAND='__prompt_command'
 
 # disables the scroll lock feature with ctrl+s on some terminal emulators
 stty -ixon
@@ -187,7 +187,7 @@ bind 'set enable-bracketed-paste on'
 export EDITOR=vim
 
 # Customize to your needs...
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/Library/bin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/.local/bin:$HOME/Library/bin:$PATH"
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
