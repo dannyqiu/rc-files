@@ -125,7 +125,7 @@ function __prompt_command {
     PURPLE="\[\033[38;5;99m\]"
     CYAN="\[\033[38;5;39m\]"
     YELLOW="\[\033[38;5;226m\]"
-    INVERTED="\[\033[38;5;0m\]\033[48;5;255m\]"
+    INVERTED="\[\033[38;5;0m\]\[\033[48;5;255m\]"
     OFF="\[\033[0m\]"
 
     branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
