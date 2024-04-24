@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Add homebrew to path
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -72,9 +75,13 @@ ZSH_THEME="muse"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+    tmux
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
+
+# Automatically start tmux
+ZSH_TMUX_AUTOSTART=true
 
 # Remove highlighting for Volumes directory
 typeset -U ZSH_HIGHLIGHT_DIRS_BLACKLIST
@@ -99,11 +106,8 @@ export OCAMLRUNPARAM=b
 # Update prompt with timestamp
 PROMPT="%{\$PROMPT_SUCCESS_COLOR%}% [%D{%H:%M:%S}] %{\$reset_color%}% $PROMPT"
 
-# Customize path
+# Customize path with additional user-space directories
 export PATH="$HOME/Library/bin:$PATH"
-
-# Add homebrew to path
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
