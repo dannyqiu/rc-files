@@ -10,6 +10,7 @@ PACKAGES=(
     jq
     openjdk
     pyenv
+    reattach-to-user-namespace
     the_silver_searcher
     tmux
     vim
