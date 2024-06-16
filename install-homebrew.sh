@@ -4,6 +4,7 @@ echo "Installing Homebrew"
 brew -v || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 PACKAGES=(
+    bat
     binwalk
     ffmpeg
     htop

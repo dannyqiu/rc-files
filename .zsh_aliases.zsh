@@ -19,6 +19,8 @@ alias v='vim'
 alias vi='vim'
 alias vima='vim'
 
+alias bat='bat -p'
+
 alias 411='man'
 alias 911='sudo'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
