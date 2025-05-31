@@ -39,6 +39,22 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
+# Random utilities
+alias urldecode='python3 -c "import sys; from html import unescape; from urllib.parse import unquote; print(unescape(unquote(sys.stdin.read())));"'
+alias exiftool-get-times='exiftool -a -s -G1 -time:all'
+function exiftool-write-video-creation-time() {
+    DATE_FMT="%Y:%m:%d %H:%M:%S"
+    if [[ "$#" -ne 2 ]]; then
+        echo "Usage:\n\t$0 '$(date "+$DATE_FMT")' <file>"
+        return
+    fi
+    if ! date -j -f "$DATE_FMT" "$1" > /dev/null; then
+        echo "Date must match format: $DATE_FMT"
+        return
+    fi
+    exiftool -overwrite_original "-CreateDate=$1" "-ModifyDate=$1" "-quicktime:CreateDate=$1" "-quicktime:ModifyDate=$1" $2
+}
+
 # Aliases for git
 alias gl='git pull'
 alias gp='git push'
@@ -46,8 +62,8 @@ alias gt='git log --oneline --decorate --graph --color --all'
 alias gitchangecommitter='GIT_COMMITTER_NAME="$(git log -1 --pretty=format:%an)" GIT_COMMITTER_EMAIL="$(git log -1 --pretty=format:%ae)" git commit --amend --no-edit'
 function gitchangedate() {
     if [[ "$#" -ne 1 ]]; then
-        date=$(date "+%a %b %-d %T %Y %z")
-        echo 'Usage:\n\tgitchangedate "'$date'"'
+        cur_dt=$(date "+%a %b %-d %T %Y %z")
+        echo "Usage:\n\t$0 '$cur_dt'"
     else
         GIT_COMMITTER_DATE="$1" GIT_AUTHOR_DATE="$1" git commit --amend --no-edit --date "$1"
     fi
