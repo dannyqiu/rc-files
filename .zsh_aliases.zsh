@@ -11,6 +11,11 @@ alias cd..='cd ..'
 alias l='ls -lF'
 alias la='ls -A'
 alias ll='ls -alF'
+alias sl='ls'
+
+# Push and pop directories on directory stack
+alias po='popd'
+alias pu='pushd'
 
 alias quit='exit'
 alias wget='wget -c'
