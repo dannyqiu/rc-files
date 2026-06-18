@@ -99,6 +99,9 @@ source $ZSH/oh-my-zsh.sh
 # Preferred editor for local and remote sessions
 export EDITOR=vim
 
+# Pipe long output to less for paging
+export PAGER="less -F -X"
+
 # Language environment variables
 export JAVA_HOME=$(/usr/libexec/java_home)
 export OCAMLRUNPARAM=b
@@ -107,7 +110,7 @@ export OCAMLRUNPARAM=b
 PROMPT="%{\$PROMPT_SUCCESS_COLOR%}% [%D{%H:%M:%S}] %{\$reset_color%}% $PROMPT"
 
 # Customize path with additional user-space directories
-export PATH="$HOME/Library/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -159,20 +162,21 @@ _group_lazy_load() {
 }
 
 # Ruby (rvm) support
-export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$HOME/.rvm/bin:$PATH"
 _group_lazy_load "$HOME/.rvm/scripts/rvm" rvm ruby gem rake
 
 # OCaml (opam) support
 _group_lazy_load "$HOME/.opam/opam-init/init.zsh" opam ocaml utop
 
-# Python (pyenv) support
-_group_lazy_load "$HOME/.pyenv/init.zsh" pyenv python python3 pip pip3
-
 # gcloud support
 GOOGLE_CLOUD_SDK_PATH="$(brew --prefix)/share/google-cloud-sdk"
 if [ -f "$GOOGLE_CLOUD_SDK_PATH/path.zsh.inc" ]; then
     source "$GOOGLE_CLOUD_SDK_PATH/path.zsh.inc"
-    _group_lazy_load "$GOOGLE_CLOUD_SDK_PATH/completion.zsh.inc" gcloud gsutil
+    _group_lazy_load "$GOOGLE_CLOUD_SDK_PATH/completion.zsh.inc" gcloud
 fi
 
 unset -f _group_lazy_load
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
