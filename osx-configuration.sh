@@ -149,6 +149,10 @@ cp -v /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/SFMono-* ~/L
 # Allow key-repeat in VSCode
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
+# Allow key-repeat in Antigravity
+defaults write com.google.antigravity ApplePressAndHoldEnabled -bool false
+defaults write com.google.antigravity-ide ApplePressAndHoldEnabled -bool false
+
 # Settings for https://rectangleapp.com
 defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
 defaults write com.knollsoft.Rectangle windowSnapping -int 2
