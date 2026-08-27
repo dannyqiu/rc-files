@@ -73,11 +73,25 @@ alias rm=safe_rm
 
 function __macos_configure() {
   alias ls='ls -G' # enable color support in ls
+
+  # Use pbcopy to pipe into system clipboard
 }
 
 function __linux_configure() {
-  alias xcopy='xclip -in -selection clipboard'
-  alias xpaste='xclip -out -selection clipboard'
+  function xcopy() {
+    local data
+    if [ -n "$1" ]; then data=$(cat "$1"); else data=$(cat); fi
+
+    # Encode to base64 and strip newlines
+    local b64=$(printf "%s" "$data" | base64 | tr -d '\r\n')
+
+    # Send OSC 52 sequence (wrapped for tmux if inside a session)
+    if [ -n "$TMUX" ]; then
+      printf "\033Ptmux;\033\033]52;c;%s\a\033\\" "$b64"
+    else
+      printf "\033]52;c;%s\a" "$b64"
+    fi
+  }
 
   # enable color support of ls and also add handy aliases
   if [ -x /usr/bin/dircolors ]; then
