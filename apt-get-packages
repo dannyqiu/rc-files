@@ -6,4 +6,4 @@ python3-pip
 default-jdk
 vim-nox
 tmux
-silversearcher-ag
+ripgrep

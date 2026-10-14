@@ -12,7 +12,7 @@ PACKAGES=(
     openjdk
     pyenv
     reattach-to-user-namespace
-    the_silver_searcher
+    ripgrep
     tmux
     vim
     vlc
@@ -31,6 +31,7 @@ CASK_PACKAGES=(
     qlmarkdown
     qlstephen
     rectangle
+    scroll-reverser
     virtual-studio-code
     wireshark
     xquartz
